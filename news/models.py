@@ -21,3 +21,7 @@ class NewsBox(models.Model):
                 output_size = (300,300)
                 img.thumbnail(output_size)
                 img.save(self.img.path)
+
+    class Meta:
+        ordering = ('-created',)
+        
