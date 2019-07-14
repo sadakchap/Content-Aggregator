@@ -10,42 +10,48 @@
     <title>All News Trends!</title>
   </head>
   <body>
-    
+    {% block content %}
     <div class="container mt-5">
       <div class="row">
         <div class="col-lg-4 ">
-          <h2>Zee News</h2>
+          <h2 class=" text-center"><a href="https://zeenews.india.com/" target="_blank">Zee News</a></h2>
           {% zeenews_latest %}
+          <p class="text-right"><a href="{% url 'get_news' src_name='Zee News' %}">Read more -</a></p>
         </div>
         <div class="col-lg-4">
-          <h2>India TV</h2>
+          <h2 class=" text-center"><a href="https://www.indiatvnews.com/" target="_blank"> India TV</a></h2>
           {% indiatv_latest %}
+          <p class="text-right"><a href="{% url 'get_news' src_name='IndiaTV' %}">Read more -</a></p>
         </div>
         <div class="col-lg-4">
-          <h2>The Hindu</h2>
+          <h2 class=" text-center"><a href="https://www.thehindu.com/" target="_blank"> The Hindu</a></h2>
           {% hindu_latest %}
+          <p class="text-right"><a href="{% url 'get_news' src_name='The Hindu' %}">Read more -</a></p>
         </div>
       </div>
     </div>
     
-    <div class="container mt-5">
+    <div class="container mt-5 pb-4">
       <div class="row text-center">
         <div class="col-lg-4">
-          <h2>News 18</h2>
+          <h2><a href="https://www.news18.com/" target="_blank">News 18</a></h2>
           {% news18 7 %}
+          <p class="text-right"><a href="{% url 'get_news' src_name='News18' %}">Read more -</a></p>
         </div>
         <div class="col-lg-4">
-          <h2>Times of India</h2>
+          <h2><a href="https://timesofindia.indiatimes.com/" target="_blank"> Times of India</a></h2>
           {% times_of_india 7 %}
+          <p class="text-right"><a href="{% url 'get_news' src_name='Times of India' %}">Read more -</a></p>
         </div>
         <div class="col-lg-4">
-          <h2>India Today</h2>
+          <h2><a href="https://www.indiatoday.in/" target="_blank">India Today</a></h2>
           {% india_today 7 %}
+          <p class="text-right"><a href="{% url 'get_news' src_name='India Today' %}">Read more -</a></p>
         </div>
       </div>
     </div>
 
-    <br><br><br><br><hr>
+    {% endblock %}
     
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

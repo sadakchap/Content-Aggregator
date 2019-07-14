@@ -3,11 +3,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from news.views import home
+from news.views import home, get_news
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('news/<str:src_name>/', get_news, name="get_news"),
 ]
 
 if settings.DEBUG:
