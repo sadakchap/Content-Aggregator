@@ -3,16 +3,16 @@
         <div class="news_bx">
             {% if n.img %}
             <div class="img-wrapper">
-                <a href="{{ n.news_link }}"><img src="{{ n.img.url }}" alt=""></a>
+                <a href="{{ n.news_link }}"><img src="{{ n.img.url }}" title="{{ n.title }}"></a>
             </div>
             {% endif %}
             <div class="text-wrapper">
                 <h4>
-                    <a href="{{ n.news_link }}" target="_blank" rel="noopener noreferrer">
+                    <a href="{{ n.news_link }}" target="_blank" rel="noopener noreferrer" title="{{ n.title }}">
                         {{ n.title|truncatewords:10 }}
                     </a>
                 </h4>
-                <p><small><a href="{{ n.src_link }}" class="text-muted">{{ n.src_name }}</a></small></p>
+                <p class="text-right"><small><a href="{{ n.src_link }}" class="text-danger font-weight-bold ">- {{ n.src_name }}</a></small></p>
             </div>
         </div>
     {% endfor %}

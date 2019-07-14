@@ -24,9 +24,7 @@ def zeenews():
         news_title = news_card.find('h3').a.text
 
         news_link = url + news_link.get('href')
-        if NewsBox.objects.filter(news_link=news_link).exists():
-            pass
-        else:
+        if not NewsBox.objects.filter(news_link=news_link).exists():
             news = NewsBox()
             news.src_name = 'Zee News'
             news.src_link = url
@@ -44,18 +42,7 @@ def zeenews():
 
                 current_image_absolute_path = os.path.abspath(local_filename)
                 shutil.move(current_image_absolute_path, media_root)
-
-
             # end of stackoverflow
             news.img = local_filename
             news.save()
-            # print("running")
-
-
-    # print(url + news_link.get('href'))
-    # print(news_img_src)
-    # print(news_title.strip())
-    # print('*'*80)
-
-    # yield every single object
 

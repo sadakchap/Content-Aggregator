@@ -24,9 +24,7 @@ def hindu():
         news_story_card = news_story.find('div', class_='story-card-news')
         news_title = news_story_card.find('h2').find('a').text
 
-        if NewsBox.objects.filter(news_link=news_link.get('href')).exists():
-            pass
-        else:
+        if not NewsBox.objects.filter(news_link=news_link.get('href')).exists():
             news = NewsBox()
             news.src_name = 'The Hindu'
             news.src_link = url
@@ -49,8 +47,7 @@ def hindu():
             # end of stackoverflow
             news.img = local_filename
             news.save()
-            print("running")
-    return 1
+
 
 
 

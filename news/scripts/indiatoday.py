@@ -4,26 +4,23 @@ from news.models import NewsBox
 
 requests.packages.urllib3.disable_warnings()
 
-url ='https://www.news18.com/'
+url = 'https://www.indiatoday.in/'
 source = requests.get(url).text
 
 soup = BeautifulSoup(source, "lxml")
 
-news_box = soup.find('ul', class_='lead-mstory')
+news_box = soup.find('ul', class_='itg-listing')
+# print(news_box.prettify())
 
-def news18():
+def indiatoday():
     for news_story in news_box.find_all('li')[:7]:
-        news_link = news_story.find('a')
+        news_link = url + news_story.find('a').get('href')
         img_src = None
-        news_title = news_link.text
+        news_title = news_story.find('a').text
 
-        news_link = news_link.get('href')
-
-        if NewsBox.objects.filter(news_link=news_link).exists():
-            pass
-        else:
+        if not NewsBox.objects.filter(news_link=news_link).exists():
             news = NewsBox()
-            news.src_name = 'News18'
+            news.src_name = 'India Today'
             news.src_link = url
             news.title = news_title
             news.news_link = news_link
@@ -31,5 +28,6 @@ def news18():
             news.save()
 
 
-
-
+    # print(news_link)
+    # print(news_title)
+    # print('*'*80)

@@ -1,5 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
+from news.models import NewsBox
+import os
+import shutil
+from django.conf import settings
+
+session = requests.Session()
+session.headers = {'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Mobile Safari/537.36'}
 
 url = 'https://www.indiatvnews.com/'
 source = requests.get(url).text
@@ -11,30 +18,41 @@ news_box=soup.find('ul', class_=['normal'])
 requests.packages.urllib3.disable_warnings()
 
 def indiaTvscrape():
-    news_list = []
     for news_story in news_box.find_all('li')[:7]:
         news_link = news_story.find('a')
-        news_img_src = news_link.find('img').get('data-original')
+        img_src = news_link.find('img').get('data-original')
         news_card = news_story.find('div',class_='text_box')
         news_title = news_card.find('h2', class_='title').a.text
 
-        # print(news_link.get('href'))
-        # print(news_img_src)
-        # print(news_title.strip())
-        # print('*'*80)
+        news_link = news_link.get('href')
 
-        news_list.append({
-            'src_nm':'IndiaTV',
-            'src_link':url, 
-            'news_title': news_title, 
-            'news_img_src': news_img_src,
-            'news_link': news_link.get('href')
-        })
-    return news_list
+        if not NewsBox.objects.filter(news_link=news_link).exists():
+            news = NewsBox()
+            news.src_name = 'IndiaTV'
+            news.src_link = url
+            news.title = news_title
+            news.news_link = news_link
+            
+            # stackoverflow solution
+            # img_src = obj['news_img_src']
+
+            media_root = settings.MEDIA_ROOT
+            if not img_src.startswith(("data:image", "javascript")):
+                local_filename = img_src.split('/')[-1].split("?")[0]
+                r = session.get(img_src, stream=True, verify=False)
+                with open(local_filename, 'wb') as f:
+                    for chunk in r.iter_content(chunk_size=1024):
+                        f.write(chunk)
+
+                current_image_absolute_path = os.path.abspath(local_filename)
+                try:
+                    shutil.move(current_image_absolute_path, media_root)
+                except:
+                    pass
 
 
-
-
-# news_story = soup.find('ul', class_=['normal']).li
-
-# print(news_story)
+            # end of stackoverflow
+            news.img = local_filename
+            news.save()
+            
+        

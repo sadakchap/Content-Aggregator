@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <title>Hello, world!</title>
+    <title>All News Trends!</title>
   </head>
   <body>
     
@@ -28,7 +28,22 @@
       </div>
     </div>
     
-
+    <div class="container mt-5">
+      <div class="row text-center">
+        <div class="col-lg-4">
+          <h2>News 18</h2>
+          {% news18 7 %}
+        </div>
+        <div class="col-lg-4">
+          <h2>Times of India</h2>
+          {% times_of_india 7 %}
+        </div>
+        <div class="col-lg-4">
+          <h2>India Today</h2>
+          {% india_today 7 %}
+        </div>
+      </div>
+    </div>
 
     <br><br><br><br><hr>
     

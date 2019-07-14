@@ -13,7 +13,21 @@ body{
     box-shadow: 0 0 1px rgba(0, 0, 0, .8);
     display: grid;
     grid-template-columns: 1fr 2fr;
+    grid-auto-rows: minmax(100px, 120px);
     grid-gap: 1em;
+    overflow: hidden;
+}
+
+.news_bx2{
+    margin: 10px auto;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .8);
+    overflow: hidden;
+    min-height: 100px;
+    max-height: 120px;
 }
 .img-wrapper{
     width: 100px;
