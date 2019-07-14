@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% block content %}
-    <div class="jumbotron fluid-jumbotron m-0">
+    <div class="jumbotron fluid-jumbotron m-0 bg-light" >
         <div class="container">
             <h2 class="display">{{ src_name }}</h2>
             <hr>
@@ -17,7 +17,7 @@
                                 {% endif %}
                                 <div class="text-wrapper">
                                     <h4><a href="{{ n.news_link}}" target="_blank">
-                                        {{ n.title }}
+                                        {{ n.title|truncatewords:10 }}
                                     </a></h4>
                                     <p>
                                         <small>
