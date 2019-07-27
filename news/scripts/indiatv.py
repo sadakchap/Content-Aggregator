@@ -35,6 +35,8 @@ def indiaTvscrape():
             
             # stackoverflow solution
             # img_src = obj['news_img_src']
+            
+            body = b''
 
             media_root = settings.MEDIA_ROOT
             if not img_src.startswith(("data:image", "javascript")):
@@ -43,6 +45,8 @@ def indiaTvscrape():
                 with open(local_filename, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=1024):
                         f.write(chunk)
+                        body += chunk
+                        # bucket.upload_fileobj(f, 'mykey')
 
                 current_image_absolute_path = os.path.abspath(local_filename)
                 try:
@@ -50,9 +54,11 @@ def indiaTvscrape():
                 except:
                     pass
 
-
             # end of stackoverflow
             news.img = local_filename
             news.save()
             
-        
+            import boto3
+            s3 = boto3.resource('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+            bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+            bucket.put_object(Key=f'media/{news.img.name}', Body=body)

@@ -7,6 +7,9 @@ from news.scripts.timesofindia import timesofindia
 from news.scripts.indiatoday import indiatoday
 
 from .models import NewsBox
+
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 # Create your views here.
 
 def home(request):

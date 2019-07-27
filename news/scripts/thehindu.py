@@ -31,6 +31,7 @@ def hindu():
             news.title = news_title
             news.news_link = news_link.get('href')
 
+            body = b''
             # start of stackoverflow
             media_root = settings.MEDIA_ROOT
             if not img_src.startswith(("data:image", "javascript")):
@@ -39,6 +40,7 @@ def hindu():
                 with open(local_filename, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=1024):
                         f.write(chunk)
+                        body += chunk
 
                 current_image_absolute_path = os.path.abspath(local_filename)
                 shutil.move(current_image_absolute_path, media_root)
@@ -47,6 +49,11 @@ def hindu():
             # end of stackoverflow
             news.img = local_filename
             news.save()
+
+            import boto3
+            s3 = boto3.resource('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+            bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+            bucket.put_object(Key=f'media/{news.img.name}', Body=body)
 
 
 

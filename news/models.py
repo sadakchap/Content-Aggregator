@@ -1,5 +1,5 @@
 from django.db import models
-from PIL import Image
+# from PIL import Image
 # Create your models here.
 
 class NewsBox(models.Model):
@@ -13,15 +13,14 @@ class NewsBox(models.Model):
     def __str__(self):
         return self.title
     
-    def save(self, *args, **kwargs):
-        super(NewsBox, self).save(*args, **kwargs)
-        if self.img:
-            img = Image.open(self.img.path)
-            if img.width > 300 or img.height > 300:
-                output_size = (300,300)
-                img.thumbnail(output_size)
-                img.save(self.img.path)
+    # def save(self, *args, **kwargs):
+    #     super(NewsBox, self).save(*args, **kwargs)
+    #     if self.img:
+    #         img = Image.open(self.img.path)
+    #         if img.width > 300 or img.height > 300:
+    #             output_size = (300,300)
+    #             img.thumbnail(output_size)
+    #             img.save(self.img.path)
 
     class Meta:
         ordering = ('-created',)
-        
